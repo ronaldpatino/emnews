@@ -82,6 +82,8 @@ add_action( 'after_setup_theme', 'twentytwelve_setup' );
  */
 require( get_template_directory() . '/inc/custom-header.php' );
 
+require_once(get_template_directory() . '/inc/portada-widget.php');
+
 /**
  * Enqueues scripts and styles for front-end.
  *
