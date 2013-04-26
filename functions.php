@@ -448,3 +448,27 @@ function twentytwelve_customize_preview_js() {
 	wp_enqueue_script( 'twentytwelve-customizer', get_template_directory_uri() . '/js/theme-customizer.js', array( 'customize-preview' ), '20120827', true );
 }
 add_action( 'customize_preview_init', 'twentytwelve_customize_preview_js' );
+
+
+/**
+ * Get the first image from the gallery and returns a img tag with it
+ * @return string
+ */
+function catch_that_image() {
+    global $post, $posts;
+    $first_img = '';
+    ob_start();
+    ob_end_clean();
+    $transformed_content = apply_filters('the_content',$post->post_content);
+    $output = preg_match_all('/<img[^>]+>/i', $transformed_content, $matches);
+    $img_tag = $matches[0][0];
+
+    $output = preg_match_all('/(alt|title|src)=("[^"]*")/i',$img_tag, $first_img);
+
+    if(empty($first_img)) {
+        $first_img = "/path/to/default.png";
+    }
+
+    $img_tag = '<img ' . $first_img[0][0] . '/>' ;
+    return $img_tag;
+}
